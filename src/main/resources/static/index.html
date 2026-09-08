@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -121,7 +120,6 @@
         }
     </style>
 </head>
-
 <body>
 <div class="contenedor">
     <section id="pantallaLogin">
@@ -158,7 +156,7 @@
             <button onclick="mostrarSeccion('resumenJefe'); cambiarVista('semana')" id="btnSemana" style="background: var(--gris-boton); color: var(--texto);">SEMANAL</button>
             <button onclick="mostrarSeccion('registrar')">+ AGREGAR CORTE</button>
             <button onclick="mostrarSeccion('miResumen')">MIS CORTES</button>
-            <button onclick="mostrarSeccion('pagoSemanal')" style="background: var(--naranja-suave); color: var(--naranja);">💰 PAGO SEMANAL</button>
+            <button onclick="mostrarSeccion('pagoSemanal')" style="background: var(--naranja-suave); color: var(--naranja);"> PAGO SEMANAL</button>
             <button onclick="mostrarSeccion('propinas'); cambiarVistaPropinas('dia')" id="btnPropinaDia" style="background: var(--verde-suave); color: var(--verde);">💵 PROPINAS DÍA</button>
             <button onclick="mostrarSeccion('propinas'); cambiarVistaPropinas('semana')" id="btnPropinaSemana" style="background: var(--gris-boton); color: var(--texto);">💵 PROPINAS SEMANA</button>
             <button class="boton-secundario" onclick="cerrarSesion()">CERRAR SESIÓN</button>
@@ -181,8 +179,8 @@
                 <select id="servicio" onchange="actualizarPrecio()"><option value="">Seleccionar servicio</option></select>
                 <label for="descripcion">Descripción del corte</label>
                 <textarea id="descripcion" placeholder="Ej: Degradé bajo, máquina 1 a los costados..."></textarea>
-                <label for="propina">💰 Propina (opcional)</label>
-                <input type="number" id="propina" min="0" step="100" placeholder="0" style="padding:12px 14px;border:1px solid var(--gris-claro);border-radius:6px;background:var(--fondo-input);color:var(--texto);font-size:15px;width:100%;" oninput="mostrarFormaPagoPropina()">
+                <label for="propina"> Propina (opcional)</label>
+                <input type="number" id="propina" min="0" step="100" placeholder="0" style="padding:12px 14px;border:1px solid var(--borde);border-radius:6px;background:var(--fondo-input);color:var(--texto);font-size:15px;width:100%;" oninput="mostrarFormaPagoPropina()">
                 <div id="propinaFormaPagoDiv" style="display:none;">
                     <label for="propinaFormaPago">Forma de pago de la propina</label>
                     <select id="propinaFormaPago">
@@ -319,7 +317,7 @@
             <div class="resumen">
                 <div class="tarjeta"><h3>Total Propinas</h3><div class="numero" id="totalPropinas" style="color: var(--verde);">$0</div></div>
                 <div class="tarjeta"><h3>💵 Efectivo</h3><div class="numero" id="propinasEfectivo" style="color: var(--verde);">$0</div></div>
-                <div class="tarjeta"><h3>📱 Transferencia</h3><div class="numero" id="propinasTransferencia" style="color: var(--azul);">$0</div></div>
+                <div class="tarjeta"><h3> Transferencia</h3><div class="numero" id="propinasTransferencia" style="color: var(--azul);">$0</div></div>
                 <div class="tarjeta"><h3>Cortes con propina</h3><div class="numero" id="cortesConPropina">0</div></div>
             </div>
             <div class="titulo-seccion"><h2>Desglose por barbero</h2></div>
@@ -385,7 +383,6 @@
         document.getElementById("app").style.display = "block";
         document.getElementById("usuarioActual").textContent = "Usuario: " + usuarioActual.nombre;
 
-        // Mostrar/ocultar selectores según si es jefe
         const barberoSelectDiv = document.getElementById("barberoSelectorDiv");
         const barberoInput = document.getElementById("barberoCorte");
         const labelBarbero = document.getElementById("labelBarberoCorte");
@@ -611,7 +608,6 @@
         try {
             await cargarAtenciones();
             
-            // Si es jefe, usa 100%. Si es barbero, usa 50%
             let porcentajeUsuario = esJefe ? PORCENTAJE_JEFE : PORCENTAJE_BARBERO;
             try {
                 const respuestaBarbero = await fetch("/barberos/" + usuarioActual.id);
@@ -654,7 +650,7 @@
             document.getElementById("cantidadCortes").textContent = misCortes.length;
             let totalGeneradoHTML = dinero(total);
             if (totalPropinas > 0) {
-                totalGeneradoHTML = dinero(total) + '<br><span style="font-size:13px;color:var(--verde);">+' + dinero(totalPropinas) + ' prop. (💵' + dinero(propinasEfectivo) + ' 📱' + dinero(propinasTransferencia) + ')</span>';
+                totalGeneradoHTML = dinero(total) + '<br><span style="font-size:13px;color:var(--verde);">+' + dinero(totalPropinas) + ' prop. (💵' + dinero(propinasEfectivo) + ' ' + dinero(propinasTransferencia) + ')</span>';
             }
             document.getElementById("totalGenerado").innerHTML = totalGeneradoHTML;
             document.getElementById("miGanancia").textContent = dinero(ganancia);
@@ -819,7 +815,7 @@
     async function cargarResumenJefe() {
         try {
             const selector = document.getElementById("fechaSelector");
-            if (selector && !selector.value) {
+            if (selector && !selector.value && !vistaSemanal) {
                 const hoy = new Date();
                 selector.value = hoy.getFullYear() + "-" + String(hoy.getMonth() + 1).padStart(2, '0') + "-" + String(hoy.getDate()).padStart(2, '0');
             }
@@ -854,7 +850,6 @@
                 totalPropinas += propina;
                 
                 if (a.barbero && a.barbero.esJefe === true) {
-                    // Si es jefe, se lleva el 100% del precio
                     const comision = precio * PORCENTAJE_JEFE;
                     const nombreJefe = a.barbero.nombre.toLowerCase();
                     if (nombreJefe === 'gabi') {
@@ -862,12 +857,10 @@
                     } else if (nombreJefe === 'diego') {
                         gananciaDiego += comision;
                     } else {
-                        // Otro jefe: dividir al medio
                         gananciaGabi += comision * 0.50;
                         gananciaDiego += comision * 0.50;
                     }
                 } else {
-                    // Si es barbero: 50% para él, 25% para Gabi, 25% para Diego
                     const comisionBarbero = precio * PORCENTAJE_BARBERO;
                     const comisionGabi = precio * 0.25;
                     const comisionDiego = precio * 0.25;
@@ -881,7 +874,6 @@
                 } else if (a.formaPago === "TRANSFERENCIA") {
                     totalTransferencia += precio;
                 }
-                // Propinas por su propia forma de pago
                 if (propina > 0) {
                     if (a.propinaFormaPago === "TRANSFERENCIA") totalTransferencia += propina;
                     else totalEfectivo += propina;
@@ -900,7 +892,6 @@
             document.getElementById("totalEfectivo").textContent = dinero(totalEfectivo);
             document.getElementById("totalTransferencia").textContent = dinero(totalTransferencia);
             
-            // Calcular propinas por forma de pago
             let propinasEfectivoResumen = 0;
             let propinasTransferenciaResumen = 0;
             cortesHoy.forEach(function(a) {
@@ -921,7 +912,6 @@
             document.getElementById("gananciaDiego").textContent = dinero(gananciaDiego);
             document.getElementById("gananciaJefes").textContent = dinero(gananciaJefes);
 
-            // Mostrar distribución detallada si hay cortes de barberos
             const cortesBarberos = cortesHoy.filter(a => !(a.barbero && a.barbero.esJefe === true));
             const distribucionDiv = document.getElementById("distribucionDetalle");
             const distribucionContenido = document.getElementById("distribucionContenido");
@@ -956,7 +946,6 @@
                     html += '</tr>';
                 });
                 
-                // Fila de totales
                 const totalPrecios = cortesBarberos.reduce((sum, a) => sum + Number(a.precio || 0), 0);
                 const totalPropinasTabla = cortesBarberos.reduce((sum, a) => sum + Number(a.propina || 0), 0);
                 html += '<tr style="background:#1a1a1a; font-weight:700;">';
@@ -982,7 +971,7 @@
                 if (!barbero.activo) return;
                 const porcentajeBarbero = barbero.porcentajeComision || 0.40;
                 const esJefeBarbero = barbero.esJefe === true;
-                const icono = esJefeBarbero ? "👑" : "✂";
+                const icono = esJefeBarbero ? "" : "✂";
                 const cortes = cortesHoy.filter(function(a) { return (a.barbero && String(a.barbero.idBarbero) === String(id)); });
                 let total = 0;
                 let totalPropinaBarbero = 0;
@@ -1004,10 +993,10 @@
                     const gabi25 = total * 0.25;
                     const diego25 = total * 0.25;
                     infoExtra = '<div style="margin-top:8px; padding-top:8px; border-top:1px solid var(--borde); font-size:11px; line-height:1.6;">' +
-                        '<span style="color:var(--violeta);"> Gabi 25%: ' + dinero(gabi25) + '</span> &nbsp;|&nbsp; ' +
+                        '<span style="color:var(--violeta);">💎 Gabi 25%: ' + dinero(gabi25) + '</span> &nbsp;|&nbsp; ' +
                         '<span style="color:var(--violeta);">💎 Diego 25%: ' + dinero(diego25) + '</span>';
                     if (totalPropinaBarbero > 0) {
-                        infoExtra += '<br><span style="color:var(--verde);">💰 Propinas: ' + dinero(totalPropinaBarbero) + ' (💵' + dinero(propinaEfectivoBarbero) + ' 📱' + dinero(propinaTransferenciaBarbero) + ')</span>';
+                        infoExtra += '<br><span style="color:var(--verde);"> Propinas: ' + dinero(totalPropinaBarbero) + ' (💵' + dinero(propinaEfectivoBarbero) + ' 📱' + dinero(propinaTransferenciaBarbero) + ')</span>';
                     }
                     infoExtra += '</div>';
                 }
@@ -1071,12 +1060,10 @@
                     totalPropinas += propina;
                     var esJefeBarbero = a.barbero && a.barbero.esJefe;
                     if (esJefeBarbero) {
-                        // Si es jefe, se lleva el 100%
                         var comision = precio * PORCENTAJE_JEFE;
                         totalComisiones += comision;
                         totalGananciaJefes += comision;
                     } else {
-                        // Si es barbero: 50% para él, 25% para Gabi, 25% para Diego
                         var comisionBarbero = precio * PORCENTAJE_BARBERO;
                         var comisionJefes = precio * 0.50;
                         totalComisiones += comisionBarbero;
@@ -1188,7 +1175,7 @@
             document.getElementById('cortesSemana').textContent = cortesLuciano.length;
             let facturadoHTML = dinero(totalFacturado);
             if (totalPropinas > 0) {
-                facturadoHTML = dinero(totalFacturado) + '<br><span style="font-size:14px;color:var(--verde);">+' + dinero(totalPropinas) + ' prop. (💵' + dinero(propinasEfectivo) + ' 📱' + dinero(propinasTransferencia) + ')</span>';
+                facturadoHTML = dinero(totalFacturado) + '<br><span style="font-size:14px;color:var(--verde);">+' + dinero(totalPropinas) + ' prop. (💵' + dinero(propinasEfectivo) + ' ' + dinero(propinasTransferencia) + ')</span>';
             }
             document.getElementById('facturadoSemana').innerHTML = facturadoHTML;
             document.getElementById('pagoLuciano').textContent = dinero(pagoLuciano);
@@ -1218,7 +1205,7 @@
                 const fila = document.createElement('tr');
                 const propina = Number(a.propina || 0);
                 const formaPagoPropina = a.propinaFormaPago || 'EFECTIVO';
-                const pagoPropinaText = propina > 0 ? (formaPagoPropina === 'TRANSFERENCIA' ? '📱 Transferencia' : ' Efectivo') : '-';
+                const pagoPropinaText = propina > 0 ? (formaPagoPropina === 'TRANSFERENCIA' ? '📱 Transferencia' : '💵 Efectivo') : '-';
                 const pagoPropinaClass = formaPagoPropina === 'TRANSFERENCIA' ? 'pago-transferencia' : '';
                 fila.innerHTML = '<td>' + new Date(a.fecha).toLocaleDateString('es-AR') + '</td><td>' + (a.horaLlegada || '-') + '</td><td>' + (a.servicio ? a.servicio.nombre : '-') + '</td><td>' + dinero(Number(a.precio || 0)) + '</td><td>' + (propina > 0 ? dinero(propina) : '-') + '</td><td class="' + pagoPropinaClass + '">' + pagoPropinaText + '</td><td style="color: var(--naranja); font-weight: 600;">' + dinero(Number(a.precio || 0) * 0.50) + '</td>';
                 tabla.appendChild(fila);
@@ -1234,7 +1221,6 @@
         cargarPagoSemanal();
     }
 
-    // ===== PROPINAS =====
     function cambiarVistaPropinas(modo) {
         vistaPropinasSemanal = (modo === 'semana');
         const btnDia = document.getElementById('btnPropinaDia');
@@ -1349,7 +1335,6 @@
 
             const cortesConPropina = atenciones.filter(filtrarPropinas);
 
-            // Actualizar fecha
             const fechaPropinasEl = document.getElementById('fechaPropinas');
             if (vistaPropinasSemanal && semanaPropinasSeleccionada) {
                 const ini = semanaPropinasSeleccionada.inicio.toLocaleDateString('es-AR', {day:'2-digit', month:'long'});
@@ -1366,7 +1351,6 @@
                 }
             }
 
-            // Calcular totales
             let totalPropinas = 0, propinasEfectivo = 0, propinasTransferencia = 0;
             cortesConPropina.forEach(function(a) {
                 const propina = Number(a.propina || 0);
@@ -1380,7 +1364,6 @@
             document.getElementById('propinasTransferencia').textContent = dinero(propinasTransferencia);
             document.getElementById('cortesConPropina').textContent = cortesConPropina.length;
 
-            // Desglose por barbero
             const listaBarberos = document.getElementById('listaPropinasBarberos');
             listaBarberos.innerHTML = '';
             const propinasPorBarbero = {};
@@ -1413,7 +1396,6 @@
                 listaBarberos.innerHTML = '<div class="sin-cortes">No hay propinas registradas en este período.</div>';
             }
 
-            // Tabla detalle
             const tabla = document.getElementById('tablaPropinas');
             tabla.innerHTML = '';
             if (cortesConPropina.length === 0) {
@@ -1469,6 +1451,5 @@
 
     iniciarApp();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a37ebfa9b98bb86f',t:'MTc4ODg3ODg0OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a37fc0bcbd89584a',t:'MTc4ODg4OTM3OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
