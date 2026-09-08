@@ -1,5 +1,6 @@
 package LujanBarberShop;
 
+import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -44,6 +45,25 @@ public class DataLoader implements CommandLineRunner {
             barberoRepository.save(b3);
 
             System.out.println(">>> ✅ 3 barberos creados: Luciano (50%), Gabi (100%), Diego (100%)");
+        } else {
+            // Actualizar barberos existentes
+            List<Barbero> barberos = barberoRepository.findAll();
+            for (Barbero b : barberos) {
+                if (b.getNombre().equalsIgnoreCase("Luciano")) {
+                    b.setEsJefe(false);
+                    b.setPorcentajeComision(0.50);
+                    barberoRepository.save(b);
+                } else if (b.getNombre().equalsIgnoreCase("Gabi")) {
+                    b.setEsJefe(true);
+                    b.setPorcentajeComision(1.00);
+                    barberoRepository.save(b);
+                } else if (b.getNombre().equalsIgnoreCase("Diego")) {
+                    b.setEsJefe(true);
+                    b.setPorcentajeComision(1.00);
+                    barberoRepository.save(b);
+                }
+            }
+            System.out.println(">>> ✅ Barberos existentes actualizados");
         }
 
         if (servicioRepository.count() == 0) {
