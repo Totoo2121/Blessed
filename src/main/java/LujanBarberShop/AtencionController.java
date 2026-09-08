@@ -50,7 +50,6 @@ public class AtencionController {
         atencion.setBarbero(barbero);
         atencion.setServicio(servicio);
 
-        // Si se envió una fecha personalizada, usarla
         if (request.getFecha() != null && !request.getFecha().trim().isEmpty()) {
             try {
                 java.time.LocalDate fechaPersonalizada = java.time.LocalDate.parse(request.getFecha());
@@ -100,18 +99,25 @@ public class AtencionController {
 
         public Integer getIdServicio() { return idServicio; }
         public void setIdServicio(Integer idServicio) { this.idServicio = idServicio; }
+
         public Integer getIdBarbero() { return idBarbero; }
         public void setIdBarbero(Integer idBarbero) { this.idBarbero = idBarbero; }
+
         public String getDescripcion() { return descripcion; }
         public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+
         public String getFormaPago() { return formaPago; }
         public void setFormaPago(String formaPago) { this.formaPago = formaPago; }
+
         public String getNombreTransferencia() { return nombreTransferencia; }
         public void setNombreTransferencia(String nombreTransferencia) { this.nombreTransferencia = nombreTransferencia; }
+
         public String getFecha() { return fecha; }
         public void setFecha(String fecha) { this.fecha = fecha; }
+
         public Double getPropina() { return propina; }
         public void setPropina(Double propina) { this.propina = propina; }
+
         public String getPropinaFormaPago() { return propinaFormaPago; }
         public void setPropinaFormaPago(String propinaFormaPago) { this.propinaFormaPago = propinaFormaPago; }
     }
