@@ -42,14 +42,14 @@ public class Atencion {
     @Column(name = "forma_pago", nullable = false)
     private String formaPago = "EFECTIVO";
 
-@Column(name = "descripcion", nullable = false)
-private String descripcion = "";
+    @Column(name = "descripcion", nullable = false)
+    private String descripcion = "";
 
-@Column(name = "propina")
-private Double propina = 0.0;
+    @Column(name = "propina")
+    private Double propina = 0.0;
 
-@Column(name = "propina_forma_pago")
-private String propinaFormaPago;
+    @Column(name = "propina_forma_pago")
+    private String propinaFormaPago;
 
     public Atencion() {
     }
