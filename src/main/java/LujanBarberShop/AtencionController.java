@@ -75,6 +75,7 @@ public class AtencionController {
         atencion.setFormaPago(request.getFormaPago() == null ? "EFECTIVO" : request.getFormaPago());
         atencion.setNombreTransferencia(request.getNombreTransferencia());
         atencion.setPropina(request.getPropina() != null ? request.getPropina() : 0.0);
+        atencion.setPropinaFormaPago(request.getPropinaFormaPago());
 
         return atencionRepository.save(atencion);
     }
@@ -95,6 +96,7 @@ public class AtencionController {
         private String nombreTransferencia;
         private String fecha;
         private Double propina;
+        private String propinaFormaPago;
 
         public Integer getIdServicio() { return idServicio; }
         public void setIdServicio(Integer idServicio) { this.idServicio = idServicio; }
@@ -110,5 +112,7 @@ public class AtencionController {
         public void setFecha(String fecha) { this.fecha = fecha; }
         public Double getPropina() { return propina; }
         public void setPropina(Double propina) { this.propina = propina; }
+        public String getPropinaFormaPago() { return propinaFormaPago; }
+        public void setPropinaFormaPago(String propinaFormaPago) { this.propinaFormaPago = propinaFormaPago; }
     }
 }
