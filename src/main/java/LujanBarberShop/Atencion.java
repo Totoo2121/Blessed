@@ -48,6 +48,9 @@ private String descripcion = "";
 @Column(name = "propina")
 private Double propina = 0.0;
 
+@Column(name = "propina_forma_pago")
+private String propinaFormaPago;
+
     public Atencion() {
     }
 
@@ -145,5 +148,13 @@ private Double propina = 0.0;
 
     public void setPropina(Double propina) {
         this.propina = propina;
+    }
+
+    public String getPropinaFormaPago() {
+        return propinaFormaPago;
+    }
+
+    public void setPropinaFormaPago(String propinaFormaPago) {
+        this.propinaFormaPago = propinaFormaPago;
     }
 }
