@@ -54,107 +54,42 @@ public class Atencion {
     public Atencion() {
     }
 
-    public Integer getIdAtencion() {
-        return idAtencion;
-    }
+    public Integer getIdAtencion() { return idAtencion; }
+    public void setIdAtencion(Integer idAtencion) { this.idAtencion = idAtencion; }
 
-    public void setIdAtencion(Integer idAtencion) {
-        this.idAtencion = idAtencion;
-    }
+    public Servicio getServicio() { return servicio; }
+    public void setServicio(Servicio servicio) { this.servicio = servicio; }
 
-    public Servicio getServicio() {
-        return servicio;
-    }
+    public Barbero getBarbero() { return barbero; }
+    public void setBarbero(Barbero barbero) { this.barbero = barbero; }
 
-    public void setServicio(Servicio servicio) {
-        this.servicio = servicio;
-    }
+    public LocalDateTime getFechaHora() { return fechaHora; }
+    public void setFechaHora(LocalDateTime fechaHora) { this.fechaHora = fechaHora; }
 
-    public Barbero getBarbero() {
-        return barbero;
-    }
+    public LocalDateTime getFecha() { return fecha; }
+    public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
 
-    public void setBarbero(Barbero barbero) {
-        this.barbero = barbero;
-    }
+    public LocalTime getHoraLlegada() { return horaLlegada; }
+    public void setHoraLlegada(LocalTime horaLlegada) { this.horaLlegada = horaLlegada; }
 
-    public LocalDateTime getFechaHora() {
-        return fechaHora;
-    }
+    public Double getPrecio() { return precio; }
+    public void setPrecio(Double precio) { this.precio = precio; }
 
-    public void setFechaHora(LocalDateTime fechaHora) {
-        this.fechaHora = fechaHora;
-    }
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 
-    public LocalDateTime getFecha() {
-        return fecha;
-    }
+    public String getNombreTransferencia() { return nombreTransferencia; }
+    public void setNombreTransferencia(String nombreTransferencia) { this.nombreTransferencia = nombreTransferencia; }
 
-    public void setFecha(LocalDateTime fecha) {
-        this.fecha = fecha;
-    }
+    public String getFormaPago() { return formaPago; }
+    public void setFormaPago(String formaPago) { this.formaPago = formaPago; }
 
-    public LocalTime getHoraLlegada() {
-        return horaLlegada;
-    }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public void setHoraLlegada(LocalTime horaLlegada) {
-        this.horaLlegada = horaLlegada;
-    }
+    public Double getPropina() { return propina; }
+    public void setPropina(Double propina) { this.propina = propina; }
 
-    public Double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Double precio) {
-        this.precio = precio;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getNombreTransferencia() {
-        return nombreTransferencia;
-    }
-
-    public void setNombreTransferencia(String nombreTransferencia) {
-        this.nombreTransferencia = nombreTransferencia;
-    }
-
-    public String getFormaPago() {
-        return formaPago;
-    }
-
-    public void setFormaPago(String formaPago) {
-        this.formaPago = formaPago;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public Double getPropina() {
-        return propina;
-    }
-
-    public void setPropina(Double propina) {
-        this.propina = propina;
-    }
-
-    public String getPropinaFormaPago() {
-        return propinaFormaPago;
-    }
-
-    public void setPropinaFormaPago(String propinaFormaPago) {
-        this.propinaFormaPago = propinaFormaPago;
-    }
+    public String getPropinaFormaPago() { return propinaFormaPago; }
+    public void setPropinaFormaPago(String propinaFormaPago) { this.propinaFormaPago = propinaFormaPago; }
 }
